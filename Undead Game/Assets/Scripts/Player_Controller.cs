@@ -13,6 +13,9 @@ public class Player_Controller : MonoBehaviour
     public Camera playerCamera;
     public float lookSpeed = 2.0f;
     public float lookXLimit = 45.0f;
+    public float dashTime = 2f;
+
+    float time = 0;
 
     CharacterController characterController;
     Vector3 moveDirection = Vector3.zero;
@@ -61,6 +64,16 @@ public class Player_Controller : MonoBehaviour
 
         // Move the controller
         characterController.Move(moveDirection * Time.deltaTime);
+
+        time += Time.deltaTime;
+        Debug.Log(time);
+
+        if (Input.GetKeyDown(KeyCode.Q) && time > dashTime)
+        {
+            Debug.Log("dash");
+            characterController.Move(moveDirection * Time.deltaTime * 10);
+            time = 0f;
+        }
 
         // Player and Camera rotation
         if (canMove)
